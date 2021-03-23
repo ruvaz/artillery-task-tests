@@ -1,4 +1,5 @@
 config:
+  processor: "./createTasks.js"
   environments:
     production:
       target: "https://api.todoist.com"
@@ -26,6 +27,7 @@ config:
 scenarios:
   - name: "Tasks Tests"
     flow:
+      - function: "generateRandomData"
       - get:
           name: "Get active tasks"
           url: "/rest/v1/tasks"
@@ -34,14 +36,14 @@ scenarios:
           name: "Create a new task"
           url: "/rest/v1/tasks"
           json:
-            content: "Buy fruts"
+            content: "{{taskName}}"
             due_string: "2021-03-26 12:00"
             due_lang: "en"
             priority: 4
           capture:
             json: "$.id"
             as: "idTask"
-      - log: "Current task Id created: {{idTask}}"
+      - log: "Current task Id created: {{idTask}} - {{taskName}}"
 
       - get:
           name: "Get an active task"
@@ -51,8 +53,8 @@ scenarios:
           name: "Update a task"
           url: "/rest/v1/tasks/{{idTask}}"
           json:
-            content: "Task updated"
-      - log: "Updated task Id: {{idTask}} To: Task updated"
+            content: "{{taskName}}"
+      - log: "Updated task Id: {{idTask}} To: {{taskName}}"
 
       - post:
           name: "Change a task status to complete"

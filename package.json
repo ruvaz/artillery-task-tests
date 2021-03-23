@@ -11,6 +11,7 @@
   "author": "Rubén Vázquez",
   "license": "ISC",
   "dependencies": {
-    "artillery": "^1.6.2"
+    "artillery": "^1.6.2",
+    "faker": "^5.4.0"
   }
 }
