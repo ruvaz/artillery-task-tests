@@ -1,0 +1,68 @@
+config:
+  environments:
+    production:
+      target: "https://api.todoist.com"
+      phases:
+        - duration: 3
+          arrivalRate: 1
+          name: "PRD Phase1"
+    staging:
+      target: "https://localhost:9080"
+      phases:
+        - duration: 320
+          arrivalRate: 10
+          name: "Phase 1"
+        - duration: 320
+          arrivalRate: 30
+          name: "Phase 2"
+        - duration: 480
+          arrivalRate: 80
+          name: "Phase 3"
+  defaults:
+    headers:
+      Authorization: Bearer {{ $processEnvironment.TOKEN }} #export TOKEN required
+      Content-Type: application/json
+
+scenarios:
+  - name: "Tasks Tests"
+    flow:
+      - get:
+          name: "Get active tasks"
+          url: "/rest/v1/tasks"
+
+      - post:
+          name: "Create a new task"
+          url: "/rest/v1/tasks"
+          json:
+            content: "Buy fruts"
+            due_string: "2021-03-26 12:00"
+            due_lang: "en"
+            priority: 4
+          capture:
+            json: "$.id"
+            as: "idTask"
+      - log: "Current task Id created: {{idTask}}"
+
+      - get:
+          name: "Get an active task"
+          url: "/rest/v1/tasks/{{idTask}}"
+
+      - post:
+          name: "Update a task"
+          url: "/rest/v1/tasks/{{idTask}}"
+          json:
+            content: "Task updated"
+      - log: "Updated task Id: {{idTask}} To: Task updated"
+
+      - post:
+          name: "Change a task status to complete"
+          url: "/rest/v1/tasks/{{idTask}}/close"
+
+      - post:
+          name: "Reopen a task"
+          url: "/rest/v1/tasks/{{idTask}}/reopen"
+      - log: "Reopen task Id: {{idTask}}"
+
+      - delete:
+          url: "/rest/v1/tasks/{{idTask}}"
+      - log: "Deleted task Id: {{idTask}}"

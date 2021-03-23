@@ -1,0 +1,16 @@
+{
+  "name": "Artillery Test - Assesment 3",
+  "version": "1.0.0",
+  "description": "Assesment 3 QA certification Wizeline Academy",
+  "main": "index.js",
+  "scripts": {
+    "test_qa": "artillery run -e staging --output results/report.json performance.yml && artillery report --output results/report.html results/report.json",
+    "test_prd": "artillery run -e production --output results/report.json performance.yml && artillery report --output results/report.html results/report.json"
+  },
+  "keywords": [],
+  "author": "Rubén Vázquez",
+  "license": "ISC",
+  "dependencies": {
+    "artillery": "^1.6.2"
+  }
+}

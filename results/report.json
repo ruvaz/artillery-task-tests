@@ -1,0 +1,108 @@
+{
+  "aggregate": {
+    "timestamp": "2021-03-23T05:28:17.188Z",
+    "scenariosCreated": 3,
+    "scenariosCompleted": 3,
+    "requestsCompleted": 21,
+    "latency": {
+      "min": 137,
+      "max": 743.4,
+      "median": 302.8,
+      "p95": 718.7,
+      "p99": 743.4
+    },
+    "rps": {
+      "count": 21,
+      "mean": 4.7
+    },
+    "scenarioDuration": {
+      "min": 2215.8,
+      "max": 2793.6,
+      "median": 2321.5,
+      "p95": 2793.6,
+      "p99": 2793.6
+    },
+    "scenarioCounts": {
+      "Tasks Tests": 3
+    },
+    "errors": {},
+    "codes": {
+      "200": 9,
+      "204": 12
+    },
+    "matches": 0,
+    "customStats": {},
+    "counters": {},
+    "scenariosAvoided": 0,
+    "phases": [
+      {
+        "duration": 3,
+        "arrivalRate": 1,
+        "name": "PRD Phase1"
+      }
+    ]
+  },
+  "intermediate": [
+    {
+      "timestamp": "2021-03-23T05:28:17.181Z",
+      "scenariosCreated": 3,
+      "scenariosCompleted": 3,
+      "requestsCompleted": 21,
+      "latency": {
+        "min": 137,
+        "max": 743.4,
+        "median": 302.8,
+        "p95": 718.7,
+        "p99": 743.4
+      },
+      "rps": {
+        "count": 21,
+        "mean": 4.7
+      },
+      "scenarioDuration": {
+        "min": 2215.8,
+        "max": 2793.6,
+        "median": 2321.5,
+        "p95": 2793.6,
+        "p99": 2793.6
+      },
+      "scenarioCounts": {
+        "Tasks Tests": 3
+      },
+      "errors": {},
+      "codes": {
+        "200": 9,
+        "204": 12
+      },
+      "matches": 0,
+      "latencies": [
+        302806900,
+        339822700,
+        181857900,
+        229148900,
+        177815800,
+        172041400,
+        184043200,
+        450071000,
+        226854800,
+        444374200,
+        221995500,
+        743361600,
+        416355300,
+        137012200,
+        470725000,
+        698457900,
+        235587300,
+        295325800,
+        448738700,
+        372670500,
+        475796300
+      ],
+      "customStats": {},
+      "counters": {},
+      "concurrency": 0,
+      "pendingRequests": 0,
+      "scenariosAvoided": 0
+    }
+  ]
+}
