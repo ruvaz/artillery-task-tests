@@ -1,12 +1,20 @@
 config:
-  processor: "./createTasks.js"
+  plugins:
+    faker:
+      locale: en
+  variables:
+    taskName: "$faker.lorem.words"
+    newTaskName: "$faker.lorem.words"
+    taskDate: "$faker.date.future"
+    newTaskDate: "$faker.date.future"
+
   environments:
     production:
       target: "https://api.todoist.com"
       phases:
-        - duration: 3
-          arrivalRate: 1
-          name: "PRD Phase1"
+        - duration: 7
+          arrivalRate: 3
+          name: "Phase1"
     staging:
       target: "https://localhost:9080"
       phases:
@@ -25,9 +33,8 @@ config:
       Content-Type: application/json
 
 scenarios:
-  - name: "Tasks Tests"
+  - name: "Performance test for tasks"
     flow:
-      - function: "generateRandomData"
       - get:
           name: "Get active tasks"
           url: "/rest/v1/tasks"
@@ -37,34 +44,40 @@ scenarios:
           url: "/rest/v1/tasks"
           json:
             content: "{{taskName}}"
-            due_string: "2021-03-26 12:00"
+            due_string: "{{taskDate}}"
             due_lang: "en"
             priority: 4
           capture:
             json: "$.id"
             as: "idTask"
-      - log: "Current task Id created: {{idTask}} - {{taskName}}"
+#      - log: "Create new task Id: {{idTask}}"
 
       - get:
           name: "Get an active task"
           url: "/rest/v1/tasks/{{idTask}}"
+          capture:
+            json: "$.content"
+            as: "taskContent"
+#      - log: "Get active task: {{idTask}}-{{taskContent}}"
 
       - post:
-          name: "Update a task"
+          name: "Update an active task"
           url: "/rest/v1/tasks/{{idTask}}"
           json:
             content: "{{taskName}}"
-      - log: "Updated task Id: {{idTask}} To: {{taskName}}"
+            due_string: "{{newTaskDate}}"
+#      - log: "Updated task Id: {{idTask}} > {{taskContent}} To: {{newTaskName}} {{newTaskDate}}"
 
       - post:
           name: "Change a task status to complete"
           url: "/rest/v1/tasks/{{idTask}}/close"
+#      - log: "Complete task Id: {{idTask}}"
 
       - post:
           name: "Reopen a task"
           url: "/rest/v1/tasks/{{idTask}}/reopen"
-      - log: "Reopen task Id: {{idTask}}"
+#      - log: "Reopen task Id: {{idTask}}"
 
       - delete:
           url: "/rest/v1/tasks/{{idTask}}"
-      - log: "Deleted task Id: {{idTask}}"
+#      - log: "Deleted task Id: {{idTask}}"
